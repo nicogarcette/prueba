@@ -9,10 +9,26 @@ namespace Clases {
         static void Main(string[] args) {
 
             Console.WriteLine("hola");
+            Escaleno a = new Escaleno();
+            Console.WriteLine(a.Perimetro());
+
+            decimal n = 1, d = 0, result = 0;
+            try {
+                result = n.DivideBy(d);
+                Console.WriteLine($"{n} / {d} = {result}");
+
+
+            } catch (Exception) {
+
+                Console.WriteLine("divicion por 0");
+
+            } finally {
+                Console.WriteLine("chau");
+            }
+
+
 
             Console.ReadKey();
-
-
         }
     }
 
@@ -20,7 +36,7 @@ namespace Clases {
         
         abstract public decimal Perimetro();// el metodo abstracto va sin las llaves
     }
-    public class escaleno:Triangulo {
+    public class Escaleno:Triangulo {
 
         public override decimal Perimetro() {
 
