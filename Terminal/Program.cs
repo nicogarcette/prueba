@@ -9,6 +9,7 @@ namespace Terminal {
     internal class Program {
         static void Main(string[] args) {
             Console.WriteLine("\n---------------Terminal---------------");
+            Console.WriteLine("\nSe requiere registrar los pasajeros de los 5 Omnibus y 5 taxis en circulacion.");
 
             List<TransportePublico> transportePublicos = new List<TransportePublico>();
 
@@ -17,7 +18,7 @@ namespace Terminal {
             int total = 0;
             int countT = 0;
             int countB = 0;
-            Console.WriteLine("\nSe requiere registrar los pasajeros de los 5 Omnibus y 5 taxis en circulacion.");
+            
             while (!entrar) {
                 int opc = validarOpc();
 
@@ -27,12 +28,10 @@ namespace Terminal {
                     //Console.WriteLine($"opc taxi {countT}");
                     addTaxi(ref transportePublicos);
                
-
                 } else if (opc == 2 && countB < 5) {
                     countB++;
                     total++;
                     //Console.WriteLine($"opc bondi {countB}");
-
                     addOmnibus(ref transportePublicos);
                 }
                 //Console.WriteLine($"el total es {total}");
@@ -52,40 +51,42 @@ namespace Terminal {
             Console.ReadKey();
         }
 
+        public static int controlException() {
+            int opc = 0;
+
+            try {
+                opc = int.Parse(Console.ReadLine());
+            } catch (FormatException) {
+                Console.WriteLine("** Solo numeros **");
+            } catch (OverflowException) {
+                Console.WriteLine("** Numero fuera del limite **");
+            }
+
+            return opc;
+        }
         public static int validarOpc() {
             int opc=0;
-            bool ok = false;
-            while (!ok) {
+            bool valido = false;
+
+            while (!valido) {
                 Console.WriteLine("\n1-ingresar taxi\n2-ingresar bondi\n");
 
-                try {
-                    opc = int.Parse(Console.ReadLine());
-                } catch (FormatException) {
-                    Console.WriteLine("** Solo numeros **");
-                } catch (OverflowException) {
-                    Console.WriteLine("** Numero fuera del limite **");
-                }
+                opc = controlException();
 
                 if (opc > 0  && opc < 3) {
-                    ok = true;
+                    valido = true;
                 } else {
                     Console.WriteLine("Ingrese una opcion correcta");
                 }
             }
             return opc;
         }
-
         public static int validarPasajerosOmnibus() {
             bool entrar = false;
             int pasajero = 0;
+
             while (!entrar) {
-                try {
-                     pasajero = int.Parse(Console.ReadLine());
-
-                } catch (Exception) {
-
-                    Console.Write("Solo numeros.");
-                }
+                pasajero = controlException();
 
                 if (pasajero > 0 && pasajero < 101) {
                     entrar = true;
@@ -100,13 +101,7 @@ namespace Terminal {
             bool entrar = false;
             int pasajero = 0;
             while (!entrar) {
-                try {
-                    pasajero = int.Parse(Console.ReadLine());
-
-                } catch (Exception) {
-
-                    Console.Write("Solo numeros.");
-                }
+                pasajero = controlException();
 
                 if (pasajero > 0 && pasajero < 5) {
                     entrar = true;
